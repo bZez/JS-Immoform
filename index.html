@@ -9,45 +9,49 @@
 $(document).ready(function() {
   $('.pro,.client').hide();
   
-  $('input[type="radio"]').change(function(){
+  $('input[name="typeUtilisateur"]').change(function(){
     //Entreprise
     if($(this).val() == '1') {
-      $('#2 input[type="radio"],#3 input[type="radio"]').prop('checked', false);
-      $('.pro #label').html("Nom de l'entreprise:");
-      $('.pro:hidden,.client:hidden').toggle(':disabled');
+      $('#label').html("Nom de l'entreprise:");
+      $('.pro,.client').show("slow");
     }
     //Collectivité
     if($(this).val() == '2') {
-      $('#1 input[type="radio"],#3 input[type="radio"]').prop('checked', false);
-      $('.pro #label').html("Nom de la collectivité:");
-      $('.pro:hidden,.client:hidden').toggle(':disabled');
+      $('#label').html("Nom de la collectivité:");
+      $('.pro,.client').show("slow");
     }
     //Particulier
     if($(this).val() == '3') {
-      $('.pro').hide(':disabled');
-      $('#1 input[type="radio"],#2 input[type="radio"]').prop('checked', false);
-      $('.pro:hidden,.client:hidden').toggle(':disabled');
+      $('.pro').hide("slow");
+      $('.client').show("slow");
     }
   })
-  $('#conditions').change(function() {
-    $('#envoyer').prop('disabled', false);
-  });
+  
+  $( 'form[name="inscription"]' ).submit(function( event ) {
+  if ( $( 'input[name="conditions"]' ).is(':checked') ) {
+    alert("Formulaire ok");
+  } else {
+	 alert("Vous devez accepter les conditions générales");
+	 event.preventDefault(); 
+  }
 });
+});
+
 
 </script>
 <h1>Vous êtes:</h1>
-<form method="POST">
+<form method="POST" name="inscription">
   
   <!-- SELECTION TYPE CLIENT -->
-  <div id="1"><input type="radio" value="1">Une entreprise</div>
-  <div id="2"><input type="radio" value="2">Une collectivité</div>
-  <div id="3"><input type="radio" value="3">Un particulier</div>
+  <div id="1"><input type="radio" name="typeUtilisateur" value="1" id="radioEntreprise"><label for="radioEntreprise">Une entreprise</label></div>
+  <div id="2"><input type="radio" name="typeUtilisateur" value="2" id="radioCollectivite"><label for="radioCollectivite">Une collectivité</label></div>
+  <div id="3"><input type="radio" name="typeUtilisateur" value="3" id="radioParticulier"><label for="radioParticulier">Un particulier</label></div>
   
   <!-- ZONE PRO -->
   <div class="pro">
     <hr>
     <label id="label"></label><br>
-    <input id="nom" type="text" placeholder="Nom..."><br>
+    <input id="nomEntrprise" type="text" placeholder="Nom..."><br>
     <input id="web" type="url" placeholder="Site web..."><br>
     Votre logo:<br>
     <input id="logo" type="file" placeholder="Votre logo...">
@@ -64,17 +68,17 @@ $(document).ready(function() {
     <input id="cp" type="text" placeholder="Code postal..."><br>
     <input id="ville" type="text" placeholder="Ville..."><br>
     Contact:<br>
-    <input id="tel"type="tel" placeholder="Téléphone..."><br>
+    <input id="tel" type="tel" placeholder="Téléphone..."><br>
     <input id="email" type="email" placeholder="Email..."><br>
     
   </div>
   
   <!-- CONDITIONS -->
   <br>
-  <input type="checkbox" required id="conditions">
+  <input type="checkbox" name="conditions" value="ok" id="conditions">
   <a href="http://bourse-immo.vosges.cci.fr/mentions-legales.php">J'accepte les conditions</a>
   
   <!-- POSTER LE FORMULAIRE -->
   <br><br>
-  <input disabled id="envoyer" type="submit" value="S'inscrire">
+  <input id="envoyer" type="submit" value="S'inscrire">
 </form>
